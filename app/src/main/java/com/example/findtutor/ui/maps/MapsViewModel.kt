@@ -9,10 +9,7 @@ import com.example.findtutor.data.entities.User
 import com.example.findtutor.data.repository.SubjectRepository
 import com.example.findtutor.data.repository.UserRepository
 import com.google.android.gms.maps.model.Marker
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class MapsViewModel(application: Application):AndroidViewModel(application) {
@@ -22,17 +19,18 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
     var tutorMarkers:MutableLiveData<List<TutorMarker>> = MutableLiveData()
     init {
         viewModelScope.launch {
-            var subject:Subject? = null
-            var userList:List<User>?=null
-            SubjectRepository(application.applicationContext)
-                .getDataById(subjectFilter).collect{
-                    subject=it
-                }
-            UserRepository(application.applicationContext)
-                .users
+            val subjectFlow = SubjectRepository(application.applicationContext)
+                .getDataById(subjectFilter)
+            UserRepository(application.applicationContext).users
+                .map { list ->
+                    list.filter { it.subject_id==subjectFilter }
+                        .filter { expFilter.contains(it.experience!!) } }
+                .zip(subjectFlow){
+                        list, subject ->  list.map { TutorMarker(it,subject) } }
                 .collect{
-                    userList=it
+                    tutorMarkers.value = it
                 }
+
         }
     }
 
@@ -52,6 +50,10 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
     fun selectMarker(marker: Marker):Boolean{
         tutorMarkers.value?.forEach {
             if (it.marker.title==marker.title) selected = it
+            with(selected?.tutor!!){
+                Log.d("selectMarker","$name $surname")
+            }
+
         }
         return false
     }

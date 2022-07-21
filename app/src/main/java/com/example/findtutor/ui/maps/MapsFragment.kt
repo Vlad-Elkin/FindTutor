@@ -30,10 +30,10 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewModel = ViewModelProvider(this)[MapsViewModel::class.java]
         _binding = FragmentMapsBinding.inflate(inflater,container,false)
-        var root:View = binding.root
+        val root:View = binding.root
         with(binding.mapSpinnerSubject){
             onItemSelectedListener = object:OnItemSelectedListener{
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -67,7 +67,6 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         //adding markers
         viewModel.tutorMarkers.observe(this){list->
             list.map{ it.marker }.forEach{
-                Log.d("marker title","${it.title}")
                 googleMap.addMarker(it)
             }
         }
