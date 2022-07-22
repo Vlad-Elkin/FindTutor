@@ -47,14 +47,12 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
             4 ->{expFilter = 10.0 .. 100.0}
         }
     }
-    fun selectMarker(marker: Marker):Boolean{
+    fun selectMarker(marker: Marker){
         tutorMarkers.value?.forEach {
             if (it.marker.title==marker.title) selected = it
             with(selected?.tutor!!){
                 Log.d("selectMarker","$name $surname")
             }
-
         }
-        return false
     }
 }
