@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.Spinner
 import androidx.lifecycle.ViewModelProvider
 import com.example.findtutor.R
 import com.example.findtutor.databinding.FragmentMapsBinding
@@ -33,6 +34,12 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         viewModel = ViewModelProvider(this)[MapsViewModel::class.java]
         _binding = FragmentMapsBinding.inflate(inflater,container,false)
         val root:View = binding.root
+        viewModel.subjectFilter1.postValue(binding.mapSpinnerSubject.selectedItemPosition)
+        viewModel.expFilter1.postValue(binding.mapSpinnerExp.selectedItemPosition)
+        filtering()
+        return root
+    }
+    private fun filtering(){
         with(binding.mapSpinnerSubject){
             onItemSelectedListener = object:OnItemSelectedListener{
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -49,9 +56,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
         }
-        return root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -64,7 +69,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
     }
     override fun onMapReady(googleMap: GoogleMap) {
         //adding markers
-        viewModel.tutorMarkers.observe(this){list->
+        viewModel.tutorMarkers.observe(viewLifecycleOwner){list->
             list.map{ it.marker }.forEach{
                 googleMap.addMarker(it)
             }

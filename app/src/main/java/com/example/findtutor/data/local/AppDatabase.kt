@@ -11,12 +11,11 @@ import com.example.findtutor.data.entities.*
         User::class,
         Subject::class
     ],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class AppDatabase:RoomDatabase() {
-    abstract fun userDao():UserDao
-    abstract fun subjectDao():SubjectDao
+    abstract fun tutorListDao():TutorListDao
     companion object{
         @Volatile
         private var INSTANCE: AppDatabase? = null

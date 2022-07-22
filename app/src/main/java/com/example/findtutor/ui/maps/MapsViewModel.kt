@@ -3,35 +3,24 @@ package com.example.findtutor.ui.maps
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.findtutor.data.entities.Subject
 import com.example.findtutor.data.entities.TutorMarker
-import com.example.findtutor.data.entities.User
-import com.example.findtutor.data.repository.SubjectRepository
-import com.example.findtutor.data.repository.UserRepository
 import com.google.android.gms.maps.model.Marker
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class MapsViewModel(application: Application):AndroidViewModel(application) {
+    var subjectFilter1 = MutableLiveData<Int>()
+    var expFilter1 = MutableLiveData<Int>()
     private var subjectFilter = 1
     private var expFilter = 0.0 .. 100.0
+
     var selected: TutorMarker? = null
     var tutorMarkers:MutableLiveData<List<TutorMarker>> = MutableLiveData()
-    init {
+
+    fun loadMarkers(){
         viewModelScope.launch {
-            val subjectFlow = SubjectRepository(application.applicationContext)
-                .getDataById(subjectFilter)
-            UserRepository(application.applicationContext).users
-                .map { list ->
-                    list.filter { it.subject_id==subjectFilter }
-                        .filter { expFilter.contains(it.experience!!) } }
-                .zip(subjectFlow){
-                        list, subject ->  list.map { TutorMarker(it,subject) } }
-                .collect{
-                    tutorMarkers.value = it
-                }
 
         }
+
     }
 
     fun filterBySubject(id: Int) {
@@ -50,8 +39,11 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
     fun selectMarker(marker: Marker){
         tutorMarkers.value?.forEach {
             if (it.marker.title==marker.title) selected = it
+            with(it.tutor!!){
+                Log.d("tutor","$name $surname")
+            }
             with(selected?.tutor!!){
-                Log.d("selectMarker","$name $surname")
+                Log.d("selected tutor","$name $surname")
             }
         }
     }

@@ -2,12 +2,14 @@ package com.example.findtutor.data.entities
 
 import android.graphics.BitmapFactory
 import androidx.core.graphics.scale
+import com.example.findtutor.data.entities.Subject
+import com.example.findtutor.data.entities.User
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class TutorMarker(_tutor:User,_subject:Subject) {
-    var tutor:User? = null
+class TutorMarker(_tutor: User, _subject: Subject) {
+    var tutor: User? = null
     var subject: Subject? = null
     var marker:MarkerOptions = MarkerOptions()
     init {

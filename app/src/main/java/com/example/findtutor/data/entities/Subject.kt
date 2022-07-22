@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "subject_table")
 data class Subject(
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    var id_subject: Int,
     val name:String,
     val possessive:String
 )

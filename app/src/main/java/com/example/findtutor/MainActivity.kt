@@ -2,9 +2,6 @@ package com.example.findtutor
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.findtutor.data.local.ExampleData
-import com.example.findtutor.data.repository.SubjectRepository
-import com.example.findtutor.data.repository.UserRepository
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
