@@ -3,6 +3,7 @@ package com.example.findtutor.ui.maps
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,8 +35,8 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         viewModel = ViewModelProvider(this)[MapsViewModel::class.java]
         _binding = FragmentMapsBinding.inflate(inflater,container,false)
         val root:View = binding.root
-        viewModel.subjectFilter1.postValue(binding.mapSpinnerSubject.selectedItemPosition)
-        viewModel.expFilter1.postValue(binding.mapSpinnerExp.selectedItemPosition)
+        viewModel.filterBySubject(binding.mapSpinnerSubject.selectedItemPosition)
+        viewModel.filterByExperience(binding.mapSpinnerExp.selectedItemPosition)
         filtering()
         return root
     }
@@ -69,9 +70,9 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
     }
     override fun onMapReady(googleMap: GoogleMap) {
         //adding markers
-        viewModel.tutorMarkers.observe(viewLifecycleOwner){list->
-            list.map{ it.marker }.forEach{
-                googleMap.addMarker(it)
+        viewModel.markerList.observe(this){list ->
+            list.forEach {
+                it.title?.let { it1 -> Log.d("MarkerOption", it1) }
             }
         }
         //location tracking
