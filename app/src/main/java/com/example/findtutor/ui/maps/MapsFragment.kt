@@ -35,8 +35,6 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         viewModel = ViewModelProvider(this)[MapsViewModel::class.java]
         _binding = FragmentMapsBinding.inflate(inflater,container,false)
         val root:View = binding.root
-        viewModel.filterBySubject(binding.mapSpinnerSubject.selectedItemPosition)
-        viewModel.filterByExperience(binding.mapSpinnerExp.selectedItemPosition)
         filtering()
         return root
     }
@@ -69,14 +67,12 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         _binding = null
     }
     override fun onMapReady(googleMap: GoogleMap) {
-        //adding markers
-        viewModel.markerList.observe(this){list ->
-            list.forEach {
-                it.title?.let { it1 -> Log.d("MarkerOption", it1) }
-            }
-        }
         //location tracking
 
+        // adding markers
+        viewModel.markers.observe(this){ list ->
+            list.forEach { googleMap.addMarker(it) }
+        }
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {

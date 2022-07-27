@@ -2,10 +2,14 @@ package com.example.findtutor.ui.maps
 
 import android.app.Application
 import android.util.Log
+import android.util.Range
+import androidx.core.util.toRange
 import androidx.lifecycle.*
 
 import com.example.findtutor.data.repository.TutorRepository
 import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -13,17 +17,22 @@ import kotlinx.coroutines.launch
 class MapsViewModel(application: Application):AndroidViewModel(application) {
     var repository = TutorRepository(getApplication<Application>().applicationContext)
 
-    var subjectChannel = Channel<Int>()
-    var expChannel = Channel<ClosedFloatingPointRange<Double>>()
+    var allTutors = repository.tutorList
 
-    private val tutorList = subjectChannel.receiveAsFlow().flatMapLatest {
-        repository.getTutorList(it)
-    }.zip(expChannel.receiveAsFlow()){
-        list, range ->  list.filter { range.contains(it.experience!!)}
-    }.asLiveData()
+    val markers = MutableLiveData<List<MarkerOptions>>()
 
-    val markerList = tutorList.map { list ->
-        list.map { it.toMarkerOptions() }
+    private var subjectChannel = Channel<Int>()
+    private var expChannel = Channel<Range<Double>>()
+
+    init {
+        viewModelScope.launch {
+
+            val subjectFlow = subjectChannel.receiveAsFlow()
+            val expFlow = expChannel.receiveAsFlow()
+            allTutors.collect{ list ->
+                markers.value = list.map { it.toMarkerOptions() }
+            }
+        }
     }
 
     fun filterBySubject(id: Int) {
@@ -32,11 +41,21 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
 
     fun filterByExperience(id: Int) {
         when(id){
-            0 ->{expChannel.trySend(0.0 .. 0.9)}
-            1 ->{expChannel.trySend(1.0 .. 2.9)}
-            2 ->{expChannel.trySend(3.0 .. 4.9)}
-            3 ->{expChannel.trySend(5.0 .. 9.9)}
-            4 ->{expChannel.trySend(10.0 .. 100.0)}
+            0 ->{
+                expChannel.trySend((0.0..0.9).toRange())
+            }
+            1 ->{
+                expChannel.trySend((1.0..2.9).toRange())
+            }
+            2 ->{
+                expChannel.trySend((3.0..4.9).toRange())
+            }
+            3 ->{
+                expChannel.trySend((5.0..9.9).toRange())
+            }
+            4 ->{
+                expChannel.trySend((10.0..100.0).toRange())
+            }
         }
     }
     fun selectMarker(marker: Marker){

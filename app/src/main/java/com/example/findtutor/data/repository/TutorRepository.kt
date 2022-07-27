@@ -13,6 +13,8 @@ import kotlinx.coroutines.launch
 class TutorRepository(context: Context) {
     private var dao = AppDatabase.getInstance(context).tutorDao()
 
+    var tutorList = dao.getTutorList()
+
     fun insertUser(user: User){
         CoroutineScope(Dispatchers.IO).launch{
             dao.insert(user)
@@ -22,8 +24,5 @@ class TutorRepository(context: Context) {
         CoroutineScope(Dispatchers.IO).launch{
             dao.insert(subject)
         }
-    }
-    fun getTutorList(id_subject: Int): Flow<List<Tutor>> {
-        return dao.getTutorListBySubjectID(id_subject)
     }
 }

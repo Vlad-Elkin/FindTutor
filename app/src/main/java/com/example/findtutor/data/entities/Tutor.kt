@@ -14,19 +14,20 @@ data class Tutor(
     val email:String,
     val phone:String,
     val linkVK:String,
+    val id_subject:Int,
     val subject_name:String,
     val subject_possessive:String,
-    val experience:Double?,
-    val about_me:String?,
-    val Latitude:Double?,
-    val Longitude:Double?){
+    val experience:Double,
+    val about_me:String,
+    val Latitude:Double,
+    val Longitude:Double){
 
     fun toMarkerOptions():MarkerOptions{
         val image = BitmapFactory.decodeByteArray(photo,0,photo.size)
             .scale(128+64,128+64,true)
         return MarkerOptions()
             .title("Tutor#$id")
-            .position(LatLng(Latitude!!,Longitude!!))
+            .position(LatLng(Latitude, Longitude))
             .icon(BitmapDescriptorFactory.fromBitmap(image))
     }
 
@@ -43,6 +44,7 @@ data class Tutor(
         if (email != other.email) return false
         if (phone != other.phone) return false
         if (linkVK != other.linkVK) return false
+        if (id_subject != other.id_subject) return false
         if (subject_name != other.subject_name) return false
         if (subject_possessive != other.subject_possessive) return false
         if (experience != other.experience) return false
@@ -61,12 +63,14 @@ data class Tutor(
         result = 31 * result + email.hashCode()
         result = 31 * result + phone.hashCode()
         result = 31 * result + linkVK.hashCode()
+        result = 31 * result + id_subject
         result = 31 * result + subject_name.hashCode()
         result = 31 * result + subject_possessive.hashCode()
-        result = 31 * result + (experience?.hashCode() ?: 0)
-        result = 31 * result + (about_me?.hashCode() ?: 0)
-        result = 31 * result + (Latitude?.hashCode() ?: 0)
-        result = 31 * result + (Longitude?.hashCode() ?: 0)
+        result = 31 * result + experience.hashCode()
+        result = 31 * result + about_me.hashCode()
+        result = 31 * result + Latitude.hashCode()
+        result = 31 * result + Longitude.hashCode()
         return result
     }
+
 }
