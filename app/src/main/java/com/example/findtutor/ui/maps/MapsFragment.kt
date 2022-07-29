@@ -95,6 +95,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
             googleMap.clear()
             list?.forEach { googleMap.addMarker(it) }
         }
+        googleMap.setOnMarkerClickListener(this)
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {

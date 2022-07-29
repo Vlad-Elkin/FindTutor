@@ -30,43 +30,50 @@
                 android:id="@+id/profile_surname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{profile.surname}" />
+                android:text="@{profile.surname}"
+                tools:text="Фамилия"/>
 
             <TextView
                 android:id="@+id/profile_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{profile.name}" />
+                android:text="@{profile.name}"
+                tools:text="Имя"/>
 
             <TextView
                 android:id="@+id/profile_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{profile.email}" />
+                android:text="@{profile.email}"
+                tools:text="E-mail"/>
 
             <TextView
                 android:id="@+id/profile_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{profile.phone}" />
+                android:text="@{profile.phone}"
+                tools:text="Телефон"/>
 
             <TextView
                 android:id="@+id/profile_subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{profile.subject}" />
+                android:text="@{profile.subject}"
+                tools:text="Репетитор по предмету"/>
 
             <TextView
                 android:id="@+id/profile_exp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{profile.exp}" />
+                android:text="@{profile.exp}"
+                tools:text="Стаж репетиторства: 0 лет"/>
 
             <TextView
                 android:id="@+id/profile_aboutSelf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{profile.aboutSelf}" />
+                android:text="@{profile.aboutSelf}"
+                tools:text="О себе:\nLorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
 
             <LinearLayout
                 android:layout_width="match_parent"

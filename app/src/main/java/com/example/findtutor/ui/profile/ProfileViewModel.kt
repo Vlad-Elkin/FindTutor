@@ -2,13 +2,11 @@ package com.example.findtutor.ui.profile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.findtutor.data.entities.Subject
-import com.example.findtutor.data.entities.User
+import com.example.findtutor.data.entities.*
 
 
 class ProfileViewModel: ViewModel() {
-    private val userLiveData = MutableLiveData<User>()
-    private val subjectLiveData = MutableLiveData<Subject>()
+    private val userLiveData = MutableLiveData<Tutor>()
     var surname = "Фамилия"
     var name = "Имя"
     var email = "E-mail"
@@ -18,5 +16,5 @@ class ProfileViewModel: ViewModel() {
     var aboutSelf = "Lorem ipsum dolor sit amet, " +
             "\nconsectetur adipiscing elit," +
             "\nsed do eiusmod tempor incididunt " +
-            "\nut labore et dolore magna aliqua.\""
+            "\nut labore et dolore magna aliqua."
 }

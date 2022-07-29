@@ -1,6 +1,7 @@
 package com.example.findtutor.ui.maps
 
 import android.app.Application
+import android.util.Log
 import android.util.Range
 import androidx.lifecycle.*
 import com.example.findtutor.data.entities.Tutor
@@ -16,10 +17,11 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
     var subjectFilter = MutableLiveData<Int>()
     var expFilter = MutableLiveData<Range<Double>>()
 
+    private val allTutors = repository.tutorList.asLiveData()
+
     private val tutors: LiveData<List<Tutor>>
         get() {
             val filteredListBySubject = Transformations.switchMap(subjectFilter){ subject_id ->
-                val allTutors = repository.tutorList.asLiveData()
                 val tutorsByFilters = when (subject_id) {
                     null -> allTutors
                     else -> {
@@ -53,7 +55,12 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
             return tutors.map { tutorList -> tutorList.map { it.toMarkerOptions() } }
         }
 
+    private var selected:MutableLiveData<Tutor> = MutableLiveData()
+
     fun selectMarker(marker: Marker){
+        allTutors.value?.forEach {
+            if(it.toMarkerOptions().title==marker.title) selected.postValue(it)
+        }
 
     }
 }
