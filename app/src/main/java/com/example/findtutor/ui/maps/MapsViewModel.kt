@@ -1,63 +1,58 @@
 package com.example.findtutor.ui.maps
 
 import android.app.Application
-import android.util.Log
 import android.util.Range
-import androidx.core.util.toRange
 import androidx.lifecycle.*
+import com.example.findtutor.data.entities.Tutor
 
 import com.example.findtutor.data.repository.TutorRepository
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.*
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 class MapsViewModel(application: Application):AndroidViewModel(application) {
-    var repository = TutorRepository(getApplication<Application>().applicationContext)
 
-    var allTutors = repository.tutorList
+    private var repository = TutorRepository(getApplication<Application>().applicationContext)
 
-    val markers = MutableLiveData<List<MarkerOptions>>()
+    var subjectFilter = MutableLiveData<Int>()
+    var expFilter = MutableLiveData<Range<Double>>()
 
-    private var subjectChannel = Channel<Int>()
-    private var expChannel = Channel<Range<Double>>()
-
-    init {
-        viewModelScope.launch {
-
-            val subjectFlow = subjectChannel.receiveAsFlow()
-            val expFlow = expChannel.receiveAsFlow()
-            allTutors.collect{ list ->
-                markers.value = list.map { it.toMarkerOptions() }
+    private val tutors: LiveData<List<Tutor>>
+        get() {
+            val filteredListBySubject = Transformations.switchMap(subjectFilter){ subject_id ->
+                val allTutors = repository.tutorList.asLiveData()
+                val tutorsByFilters = when (subject_id) {
+                    null -> allTutors
+                    else -> {
+                        Transformations.switchMap(allTutors){ list->
+                            val filteredTutors = MutableLiveData<List<Tutor>>()
+                            val filteredList = list.filter { tutor -> tutor.id_subject== subject_id }
+                            filteredTutors.value = filteredList
+                            filteredTutors
+                        }
+                    }
+                }
+                tutorsByFilters
             }
+            val filteredListByExperience = Transformations.switchMap(expFilter){exp ->
+                val tutorsByFilters = when (exp) {
+                    null -> filteredListBySubject
+                    else -> Transformations.switchMap(filteredListBySubject) { list ->
+                        val filteredTutors = MutableLiveData<List<Tutor>>()
+                        val filteredList = list.filter { tutor -> exp.contains(tutor.experience) }
+                        filteredTutors.value = filteredList
+                        filteredTutors
+                    }
+                }
+                tutorsByFilters
+            }
+            return filteredListByExperience
         }
-    }
 
-    fun filterBySubject(id: Int) {
-        subjectChannel.trySend(id+1)
-    }
-
-    fun filterByExperience(id: Int) {
-        when(id){
-            0 ->{
-                expChannel.trySend((0.0..0.9).toRange())
-            }
-            1 ->{
-                expChannel.trySend((1.0..2.9).toRange())
-            }
-            2 ->{
-                expChannel.trySend((3.0..4.9).toRange())
-            }
-            3 ->{
-                expChannel.trySend((5.0..9.9).toRange())
-            }
-            4 ->{
-                expChannel.trySend((10.0..100.0).toRange())
-            }
+    val markers: LiveData<List<MarkerOptions>>
+        get() {
+            return tutors.map { tutorList -> tutorList.map { it.toMarkerOptions() } }
         }
-    }
+
     fun selectMarker(marker: Marker){
 
     }

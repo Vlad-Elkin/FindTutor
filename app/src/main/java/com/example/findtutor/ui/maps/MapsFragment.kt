@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Spinner
+import androidx.core.util.toRange
 import androidx.lifecycle.ViewModelProvider
 import com.example.findtutor.R
 import com.example.findtutor.databinding.FragmentMapsBinding
@@ -39,22 +40,42 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         return root
     }
     private fun filtering(){
-        with(binding.mapSpinnerSubject){
-            onItemSelectedListener = object:OnItemSelectedListener{
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    viewModel.filterBySubject(p2)
+        with(viewModel){
+            with(binding.mapSpinnerSubject){
+                onItemSelectedListener = object:OnItemSelectedListener{
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                        subjectFilter.postValue(p2+1)
+                    }
+                    override fun onNothingSelected(p0: AdapterView<*>?) {}
                 }
-                override fun onNothingSelected(p0: AdapterView<*>?) {}
+            }
+            with(binding.mapSpinnerExp){
+                onItemSelectedListener = object:OnItemSelectedListener{
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+                        when(p2){
+                            0 ->{
+                                expFilter.postValue((0.0..0.9).toRange())
+                            }
+                            1 ->{
+                                expFilter.postValue((1.0..2.9).toRange())
+                            }
+                            2 ->{
+                                expFilter.postValue((3.0..4.9).toRange())
+                            }
+                            3 ->{
+                                expFilter.postValue((5.0..9.9).toRange())
+                            }
+                            4 ->{
+                                expFilter.postValue((10.0..100.0).toRange())
+                            }
+                        }
+                    }
+                    override fun onNothingSelected(p0: AdapterView<*>?) {}
+                }
             }
         }
-        with(binding.mapSpinnerExp){
-            onItemSelectedListener = object:OnItemSelectedListener{
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    viewModel.filterByExperience(p2)
-                }
-                override fun onNothingSelected(p0: AdapterView<*>?) {}
-            }
-        }
+
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,7 +92,8 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
 
         // adding markers
         viewModel.markers.observe(this){ list ->
-            list.forEach { googleMap.addMarker(it) }
+            googleMap.clear()
+            list?.forEach { googleMap.addMarker(it) }
         }
     }
 
