@@ -1,11 +1,14 @@
 package com.example.findtutor.data.entities
 
 import android.graphics.BitmapFactory
+import android.os.Parcelable
 import androidx.core.graphics.scale
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Tutor(
     val id:Int,
     val photo: ByteArray,
@@ -20,7 +23,7 @@ data class Tutor(
     val experience:Double,
     val about_me:String,
     val Latitude:Double,
-    val Longitude:Double){
+    val Longitude:Double) : Parcelable {
 
     fun toMarkerOptions():MarkerOptions{
         val image = BitmapFactory.decodeByteArray(photo,0,photo.size)
@@ -72,5 +75,6 @@ data class Tutor(
         result = 31 * result + Longitude.hashCode()
         return result
     }
+
 
 }

@@ -8,10 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.findtutor.R
-import com.example.findtutor.data.local.ExampleData
-import com.example.findtutor.databinding.FragmentRegisterBinding
 import com.example.findtutor.databinding.FragmentStartBinding
-import com.example.findtutor.ui.maps.MapsViewModel
 
 class StartFragment : Fragment() {
 
@@ -29,13 +26,13 @@ class StartFragment : Fragment() {
         _binding = FragmentStartBinding.inflate(inflater,container,false )
         val root:View = binding.root
         binding.btnAuth.setOnClickListener {
-            findNavController().navigate(R.id.action_startFragment_to_loginFragment)
+            findNavController().navigate(R.id.StartToLogin)
         }
         binding.btnReg.setOnClickListener {
-            findNavController().navigate(R.id.action_startFragment_to_registerFragment)
+            findNavController().navigate(R.id.StartToRegister)
         }
         binding.btnAbout.setOnClickListener {
-            findNavController().navigate(R.id.action_startFragment_to_aboutFragment)
+            findNavController().navigate(R.id.StartToAbout)
         }
         return root
     }

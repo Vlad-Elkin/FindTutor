@@ -14,101 +14,101 @@
         android:layout_height="match_parent"
         tools:context=".ui.profile.ProfileFragment">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                app:srcCompat="@drawable/avatar" />
-
-            <TextView
-                android:id="@+id/profile_surname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{profile.surname}"
-                tools:text="Фамилия"/>
-
-            <TextView
-                android:id="@+id/profile_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{profile.name}"
-                tools:text="Имя"/>
-
-            <TextView
-                android:id="@+id/profile_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{profile.email}"
-                tools:text="E-mail"/>
-
-            <TextView
-                android:id="@+id/profile_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{profile.phone}"
-                tools:text="Телефон"/>
-
-            <TextView
-                android:id="@+id/profile_subject"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{profile.subject}"
-                tools:text="Репетитор по предмету"/>
-
-            <TextView
-                android:id="@+id/profile_exp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{profile.exp}"
-                tools:text="Стаж репетиторства: 0 лет"/>
-
-            <TextView
-                android:id="@+id/profile_aboutSelf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{profile.aboutSelf}"
-                tools:text="О себе:\nLorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/avatar" />
+
+                <TextView
+                    android:id="@+id/profile_surname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{profile.surname}" />
+
+                <TextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{profile.name}" />
+
+                <TextView
+                    android:id="@+id/profile_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{profile.email}" />
+
+                <TextView
+                    android:id="@+id/profile_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{profile.phone}" />
+
+                <TextView
+                    android:id="@+id/profile_subject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{profile.subject}" />
+
+                <TextView
+                    android:id="@+id/profile_exp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{profile.exp}" />
+
+                <TextView
+                    android:id="@+id/profile_aboutSelf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="5"
+                    android:text="@{profile.aboutSelf}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/vk_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="VK" />
+
+                        <Button
+                            android:id="@+id/button2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Button" />
+
+                    </LinearLayout>
 
                     <Button
-                        android:id="@+id/button"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/call_btn"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Button" />
-
-                    <Button
-                        android:id="@+id/button2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Button" />
+                        android:text="Позвонить" />
 
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Button" />
-
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
+
     </FrameLayout>
 </layout>

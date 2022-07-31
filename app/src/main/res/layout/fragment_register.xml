@@ -11,94 +11,100 @@
         android:layout_height="match_parent"
         tools:context=".ui.register.RegisterFragment">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <Switch
-                android:id="@+id/switch1"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Switch" />
+                android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/reg_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Имя"
-                android:inputType="textPersonName" />
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Switch" />
 
-            <EditText
-                android:id="@+id/reg_surname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Фамилия"
-                android:inputType="textPersonName" />
+                <EditText
+                    android:id="@+id/reg_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Имя"
+                    android:inputType="textPersonName" />
 
-            <EditText
-                android:id="@+id/reg_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Email"
-                android:inputType="textEmailAddress" />
+                <EditText
+                    android:id="@+id/reg_surname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Фамилия"
+                    android:inputType="textPersonName" />
 
-            <EditText
-                android:id="@+id/reg_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Телефон"
-                android:inputType="phone" />
+                <EditText
+                    android:id="@+id/reg_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/email_hint"
+                    android:inputType="textEmailAddress" />
 
-            <EditText
-                android:id="@+id/reg_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Пароль"
-                android:inputType="textPassword" />
+                <EditText
+                    android:id="@+id/reg_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/phone_hint"
+                    android:inputType="phone" />
 
-            <EditText
-                android:id="@+id/reg_linkVK"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Ссылка на ВК"
-                android:inputType="textPersonName" />
+                <EditText
+                    android:id="@+id/reg_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/password_hint"
+                    android:inputType="textPassword" />
 
-            <Spinner
-                android:id="@+id/reg_subjectSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/subjects" />
+                <EditText
+                    android:id="@+id/reg_linkVK"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Ссылка на ВК"
+                    android:inputType="textPersonName" />
 
-            <EditText
-                android:id="@+id/reg_exp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Стаж репетиторства"
-                android:inputType="number" />
+                <Spinner
+                    android:id="@+id/reg_subjectSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/subjects" />
 
-            <EditText
-                android:id="@+id/reg_aboutSelf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="О себе"
-                android:inputType="textMultiLine" />
+                <EditText
+                    android:id="@+id/reg_exp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Стаж репетиторства"
+                    android:inputType="number" />
 
-            <Button
-                android:id="@+id/register_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/reg_aboutSelf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="О себе"
+                    android:inputType="textMultiLine"
+                    android:minLines="5" />
+
+                <Button
+                    android:id="@+id/register_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reg" />
+            </LinearLayout>
+        </ScrollView>
 
     </FrameLayout>
 </layout>

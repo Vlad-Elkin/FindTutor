@@ -10,13 +10,13 @@
         android:label="fragment_start"
         tools:layout="@layout/fragment_start" >
         <action
-            android:id="@+id/action_startFragment_to_loginFragment"
+            android:id="@+id/StartToLogin"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_startFragment_to_registerFragment"
+            android:id="@+id/StartToRegister"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_startFragment_to_aboutFragment"
+            android:id="@+id/StartToAbout"
             app:destination="@id/aboutFragment" />
     </fragment>
     <fragment
@@ -25,7 +25,7 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_mapsFragment"
+            android:id="@+id/LoginToMaps"
             app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
@@ -34,14 +34,21 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_registerFragment_to_mapsFragment"
+            android:id="@+id/RegisterToMaps"
             app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.findtutor.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/ProfileToMaps"
+            app:destination="@id/mapsFragment" />
+        <argument
+            android:name="tutor"
+            app:argType="com.example.findtutor.data.entities.Tutor" />
+    </fragment>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.findtutor.ui.about.AboutFragment"
@@ -53,7 +60,10 @@
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps">
         <action
-            android:id="@+id/action_mapsFragment_to_profileFragment"
+            android:id="@+id/MapsToProfilte"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/MapsToStart"
+            app:destination="@id/startFragment" />
     </fragment>
 </navigation>

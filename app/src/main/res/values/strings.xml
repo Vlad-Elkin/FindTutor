@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">FindTutor</string>
     <string name="btn_auth_text">Авторизация</string>
-    <string name="btn_reg_text">Регистрация</string>
+    <string name="reg">Регистрация</string>
     <string name="btn_about_text">О программе</string>
+    <string name="password_hint">Пароль</string>
+    <string name="phone_hint">Телефон</string>
+    <string name="email_hint">Email</string>
+    <string name="email_phone_hint">Email/Телефон</string>
 
     <string-array name="subjects">
         <item>Математика</item>

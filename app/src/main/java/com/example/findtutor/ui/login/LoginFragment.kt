@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
         _binding =FragmentLoginBinding.inflate(inflater,container,false )
         val root:View = binding.root
         binding.loginBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_mapsFragment)
+            findNavController().navigate(R.id.LoginToMaps)
         }
         return root
     }

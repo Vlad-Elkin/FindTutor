@@ -10,8 +10,11 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Spinner
+import androidx.core.os.bundleOf
 import androidx.core.util.toRange
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.map
+import androidx.navigation.fragment.findNavController
 import com.example.findtutor.R
 import com.example.findtutor.databinding.FragmentMapsBinding
 
@@ -22,9 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
 
 class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
-    private var _binding: FragmentMapsBinding? = null
-
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentMapsBinding
 
     private lateinit var viewModel: MapsViewModel
 
@@ -34,11 +35,14 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this)[MapsViewModel::class.java]
-        _binding = FragmentMapsBinding.inflate(inflater,container,false)
+        binding = FragmentMapsBinding.inflate(inflater,container,false)
         val root:View = binding.root
         filtering()
+
         return root
     }
+
+
     private fun filtering(){
         with(viewModel){
             with(binding.mapSpinnerSubject){
@@ -81,12 +85,13 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+
+        binding.mapProfile.setOnClickListener {
+            val bundle = Bundle()
+            findNavController().navigate(R.id.MapsToProfilte)
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
     override fun onMapReady(googleMap: GoogleMap) {
         //location tracking
 
@@ -99,7 +104,10 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        viewModel.selectMarker(marker)
+        viewModel.selectMarker(marker).observe(this){
+            val bundle = bundleOf("tutor" to it)
+            findNavController().navigate(R.id.profileFragment,bundle)
+        }
         return false
     }
 }

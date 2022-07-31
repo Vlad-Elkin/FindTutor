@@ -57,10 +57,10 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
 
     private var selected:MutableLiveData<Tutor> = MutableLiveData()
 
-    fun selectMarker(marker: Marker){
+    fun selectMarker(marker: Marker): MutableLiveData<Tutor> {
         allTutors.value?.forEach {
             if(it.toMarkerOptions().title==marker.title) selected.postValue(it)
         }
-
+        return selected
     }
 }
