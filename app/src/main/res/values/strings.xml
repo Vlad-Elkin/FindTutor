@@ -7,7 +7,7 @@
     <string name="phone_hint">Телефон</string>
     <string name="email_hint">Email</string>
     <string name="email_phone_hint">Email/Телефон</string>
-
+    <string name="tutor_by_subject_template">Репетитор по %</string>
     <string-array name="subjects">
         <item>Математика</item>
         <item>История</item>

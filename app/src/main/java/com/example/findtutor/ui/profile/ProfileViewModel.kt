@@ -12,70 +12,65 @@ import androidx.lifecycle.ViewModel
 import com.example.findtutor.data.entities.*
 
 
-class ProfileViewModel: ViewModel() {
-    val profile = MutableLiveData<Tutor>()
+class ProfileViewModel(): ViewModel() {
 
-    init {
 
+    val photo: MutableLiveData<Drawable> by lazy {
+        MutableLiveData()
     }
 
+    val surname:MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
 
-    val photo: MutableLiveData<Drawable>
-        get() {
-            var byteArray = profile.value?.photo
-            var bitmap = byteArray?.let { BitmapFactory.decodeByteArray(it,0,it.size) }
-                return  MutableLiveData(
-                    BitmapDrawable(Resources.getSystem(),bitmap)
-                )
-            }
+    val name:MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
 
-    val surname:MutableLiveData<String>
-        get() {
-            return MutableLiveData(profile.value?.surname ?: "Фамилия")
+    val email:MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
+
+    val phone:MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
+
+    val subject:MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
+
+    val exp:MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
+    val aboutSelf:MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
+
+    fun setProfile(profile:Tutor){
+        with(profile.photo){
+            val bitmap = BitmapFactory.decodeByteArray(this,0,this.size)
+            photo.value = BitmapDrawable(Resources.getSystem(),bitmap)
         }
-
-    val name:MutableLiveData<String>
-        get() {
-            return MutableLiveData(profile.value?.name ?: "Имя")
-        }
-
-    val email:MutableLiveData<String>
-        get() {
-            return MutableLiveData(profile.value?.email ?: "E-mail")
-        }
-
-    val phone:MutableLiveData<String>
-        get() {
-            return MutableLiveData(profile.value?.phone ?: "Телефон")
-        }
-
-    val subject:MutableLiveData<String>
-        get() {
-            return MutableLiveData("Репетитор по " + (profile.value?.subject_possessive ?: "предмету"))
-        }
-
-    val exp:MutableLiveData<String>
-        get() {
-            val year = with(profile.value?.experience?.toInt()) {
-                val tens = this?.rem(100)
-                val ones = this?.rem(10)
-                when (tens) {
-                    in 10..20 -> "лет"
-                    else -> {
-                        when (ones) {
-                            1 -> "год"
-                            in 2..4 ->"года"
-                            else -> "лет"
-                        }
+        surname.value = profile.surname
+        surname.value = profile.surname
+        name.value = profile.name
+        email.value = profile.email
+        phone.value = profile.phone
+        subject.value = profile.subject_possessive
+        with(profile.experience.toInt()){
+            val tens = this%100
+            val ones = this%10
+            when(tens){
+                in 10..20 -> exp.value = "$this лет"
+                else -> {
+                    when(ones){
+                        1 -> exp.value = "$this год"
+                        in 2..4 -> exp.value = "$this года"
+                        else -> exp.value = "$this лет"
                     }
                 }
             }
-            return MutableLiveData(
-                "Стаж репетиторства:  ${profile.value?.experience?:0} $year")
         }
-    val aboutSelf:MutableLiveData<String>
-        get() {
-            return MutableLiveData("О себе: " + (profile.value?.about_me ?:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."))
-        }
+        aboutSelf.value = profile.about_me
+    }
 }

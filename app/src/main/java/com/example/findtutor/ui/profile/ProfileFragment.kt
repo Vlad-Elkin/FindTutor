@@ -26,10 +26,10 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val tutor = arguments?.get("tutor") as Tutor
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        viewModel.profile.postValue(tutor)
+        viewModel.setProfile(tutor)
         binding =FragmentProfileBinding.inflate(inflater,container,false )
         val root:View = binding.root
         binding.profile =viewModel

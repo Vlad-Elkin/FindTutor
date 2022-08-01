@@ -25,4 +25,6 @@ interface TutorDao {
             "subject_table as Subject " +
             "WHERE User.id_fk_subject = Subject.id_subject")
     fun getTutorList():Flow<List<Tutor>>
+
+    fun getTutor()
 }
