@@ -6,9 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.findtutor.R
 import com.example.findtutor.databinding.FragmentLoginBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
 
@@ -28,11 +33,27 @@ class LoginFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         _binding =FragmentLoginBinding.inflate(inflater,container,false )
         val root:View = binding.root
+
         binding.loginBtn.setOnClickListener {
-            findNavController().navigate(R.id.LoginToMaps)
+            val login = binding.loginEmailPhone.text.toString()
+            val password = binding.loginPassword.text.toString()
+            val tutor = viewModel.checkTutor(login,password)
+            if (tutor!= null){
+                var bundle = if (tutor.isTutor){
+                    bundleOf("tutor" to tutor)
+                } else{
+                    bundleOf("user" to tutor)
+                }
+                findNavController().navigate(R.id.LoginToMaps, bundle)
+            }
+            else{
+                Toast.makeText(this.requireContext(),"User is not found",Toast.LENGTH_SHORT).show()
+            }
+
         }
         return root
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

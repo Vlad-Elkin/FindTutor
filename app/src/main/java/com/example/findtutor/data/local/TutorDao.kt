@@ -1,5 +1,6 @@
 package com.example.findtutor.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -14,10 +15,12 @@ interface TutorDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertNewUser(user: User)
 
-    @Query("SELECT id,photo,"+
+    @Query("SELECT id,isTutor,photo,"+
             "name, surname," +
-            "email, phone, linkVK," +
+            "email, phone, password, linkVK," +
             "id_subject,subject_name, subject_possessive," +
             "experience, about_me," +
             "Latitude,Longitude " +
@@ -26,5 +29,4 @@ interface TutorDao {
             "WHERE User.id_fk_subject = Subject.id_subject")
     fun getTutorList():Flow<List<Tutor>>
 
-    fun getTutor()
 }

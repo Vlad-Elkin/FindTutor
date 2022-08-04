@@ -87,8 +87,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         mapFragment?.getMapAsync(this)
 
         binding.mapProfile.setOnClickListener {
-            val bundle = Bundle()
-            findNavController().navigate(R.id.MapsToProfilte)
+            findNavController().navigate(R.id.MapsToProfilte,arguments)
         }
     }
 

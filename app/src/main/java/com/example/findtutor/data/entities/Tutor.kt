@@ -11,11 +11,13 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Tutor(
     val id:Int,
+    val isTutor:Boolean,
     val photo: ByteArray,
     val name:String,
     val surname:String,
     val email:String,
     val phone:String,
+    val password:String,
     val linkVK:String,
     val id_subject:Int,
     val subject_name:String,
@@ -41,11 +43,13 @@ data class Tutor(
         other as Tutor
 
         if (id != other.id) return false
+        if (isTutor!= other.isTutor) return false
         if (!photo.contentEquals(other.photo)) return false
         if (name != other.name) return false
         if (surname != other.surname) return false
         if (email != other.email) return false
         if (phone != other.phone) return false
+        if (password != other.password) return false
         if (linkVK != other.linkVK) return false
         if (id_subject != other.id_subject) return false
         if (subject_name != other.subject_name) return false
@@ -60,11 +64,13 @@ data class Tutor(
 
     override fun hashCode(): Int {
         var result = id
+        result = 31 * result + isTutor.hashCode()
         result = 31 * result + photo.contentHashCode()
         result = 31 * result + name.hashCode()
         result = 31 * result + surname.hashCode()
         result = 31 * result + email.hashCode()
         result = 31 * result + phone.hashCode()
+        result = 31 * result + password.hashCode()
         result = 31 * result + linkVK.hashCode()
         result = 31 * result + id_subject
         result = 31 * result + subject_name.hashCode()

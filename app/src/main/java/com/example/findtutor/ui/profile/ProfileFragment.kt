@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.findtutor.data.entities.Subject
 import com.example.findtutor.data.entities.Tutor
 import com.example.findtutor.data.entities.User
@@ -27,12 +28,23 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val tutor = arguments?.get("tutor") as Tutor
+        var tutor:Any?
+        if (arguments?.get("user")!= null){
+            tutor = arguments?.get("user") as Tutor
+        }
+        else{
+            tutor = arguments?.get("tutor") as Tutor
+        }
+
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         viewModel.setProfile(tutor)
         binding =FragmentProfileBinding.inflate(inflater,container,false )
         val root:View = binding.root
         binding.profile =viewModel
+        binding.profileBack.setOnClickListener {
+
+            findNavController().popBackStack()
+        }
         return root
     }
 }

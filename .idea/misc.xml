@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Apps/FindTutor/app/src/main/res/drawable/circle.xml" value="0.3505" />
         <entry key="..\:/Apps/FindTutor/app/src/main/res/drawable/custom_spinner.xml" value="0.279" />
         <entry key="..\:/Apps/FindTutor/app/src/main/res/drawable/custom_spinner_item_first.xml" value="0.189" />
         <entry key="..\:/Apps/FindTutor/app/src/main/res/drawable/custom_spinner_item_last.xml" value="0.189" />
@@ -14,7 +15,7 @@
         <entry key="..\:/Apps/FindTutor/app/src/main/res/layout/fragment_about.xml" value="0.27447916666666666" />
         <entry key="..\:/Apps/FindTutor/app/src/main/res/layout/fragment_login.xml" value="0.22" />
         <entry key="..\:/Apps/FindTutor/app/src/main/res/layout/fragment_maps.xml" value="0.27447916666666666" />
-        <entry key="..\:/Apps/FindTutor/app/src/main/res/layout/fragment_profile.xml" value="0.5" />
+        <entry key="..\:/Apps/FindTutor/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Apps/FindTutor/app/src/main/res/layout/fragment_register.xml" value="0.27447916666666666" />
         <entry key="..\:/Apps/FindTutor/app/src/main/res/layout/fragment_start.xml" value="0.25" />
       </map>

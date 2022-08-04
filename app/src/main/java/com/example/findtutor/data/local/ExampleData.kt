@@ -11,9 +11,9 @@ class ExampleData(context: Context) {
     var users:List<User>
     var subjects:List<Subject>
     init {
-        var avatar = ByteArrayOutputStream().let {
-            var drawable = context.getDrawable(R.drawable.avatar)
-            var bitmap = (drawable as BitmapDrawable).bitmap
+        val avatar = ByteArrayOutputStream().let {
+            val drawable = context.getDrawable(R.drawable.avatar)
+            val bitmap = (drawable as BitmapDrawable).bitmap
             bitmap.compress(Bitmap.CompressFormat.PNG,100,it)
             it.toByteArray()
         }
@@ -36,7 +36,7 @@ class ExampleData(context: Context) {
                 64.532921,40.546299
             ),
             User(3,true,avatar,"Максим","Попов",
-                "popov.maksim@gmail.com","+78129793895","7rHTolBuaD",
+                "popov.maksim@gmail.com","+78129793896","7rHTolBuaD",
                 "id183430638",3,4.0,
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 64.533921,40.546315

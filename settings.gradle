@@ -10,6 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        //for image picker
+        maven { url "https://jitpack.io" }
+
     }
 }
 rootProject.name = "FindTutor"

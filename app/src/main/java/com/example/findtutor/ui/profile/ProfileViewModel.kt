@@ -15,9 +15,7 @@ import com.example.findtutor.data.entities.*
 class ProfileViewModel(): ViewModel() {
 
 
-    val photo: MutableLiveData<Drawable> by lazy {
-        MutableLiveData()
-    }
+    var photo: Drawable?=null
 
     val surname:MutableLiveData<String> by lazy {
         MutableLiveData()
@@ -49,13 +47,14 @@ class ProfileViewModel(): ViewModel() {
     fun setProfile(profile:Tutor){
         with(profile.photo){
             val bitmap = BitmapFactory.decodeByteArray(this,0,this.size)
-            photo.value = BitmapDrawable(Resources.getSystem(),bitmap)
+            photo = BitmapDrawable(Resources.getSystem(),bitmap)
         }
         surname.value = profile.surname
         surname.value = profile.surname
         name.value = profile.name
         email.value = profile.email
         phone.value = profile.phone
+        if (profile.isTutor){
         subject.value = profile.subject_possessive
         with(profile.experience.toInt()){
             val tens = this%100
@@ -72,5 +71,6 @@ class ProfileViewModel(): ViewModel() {
             }
         }
         aboutSelf.value = profile.about_me
+        }
     }
 }

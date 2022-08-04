@@ -1,46 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="user"
+            type="com.example.findtutor.data.entities.User" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.register.RegisterFragment">
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:background="#66F168"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/reg_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/ImageViewCircle"
+                    app:srcCompat="@drawable/avatar" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <Switch
                     android:id="@+id/switch1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Switch" />
+                    android:text="Репетитор?" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/reg_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Имя"
-                    android:inputType="textPersonName" />
+                    android:hint="@string/name_hint"
+                    android:inputType="textPersonName"
+                    android:text="@{user.name}" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/reg_surname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Фамилия"
-                    android:inputType="textPersonName" />
+                    android:hint="@string/surname_hint"
+                    android:inputType="textPersonName"
+                    android:text="@{user.surname}" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/reg_email"
@@ -48,7 +90,12 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="@string/email_hint"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:text="@{user.email}" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/reg_phone"
@@ -56,7 +103,12 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="@string/phone_hint"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:text="@{user.phone}" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/reg_password"
@@ -64,7 +116,12 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="@string/password_hint"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:text="@{user.password}" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/reg_linkVK"
@@ -72,13 +129,22 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Ссылка на ВК"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:text="@{user.linkVK}" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <Spinner
                     android:id="@+id/reg_subjectSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/subjects" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/reg_exp"
@@ -88,6 +154,10 @@
                     android:hint="Стаж репетиторства"
                     android:inputType="number" />
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/reg_aboutSelf"
                     android:layout_width="match_parent"
@@ -96,7 +166,8 @@
                     android:gravity="start|top"
                     android:hint="О себе"
                     android:inputType="textMultiLine"
-                    android:minLines="5" />
+                    android:minLines="5"
+                    android:text="@{user.about_me}" />
 
                 <Button
                     android:id="@+id/register_btn"
@@ -105,6 +176,6 @@
                     android:text="@string/reg" />
             </LinearLayout>
         </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </FrameLayout>
 </layout>
