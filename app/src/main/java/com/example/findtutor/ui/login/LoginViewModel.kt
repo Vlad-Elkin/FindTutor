@@ -38,9 +38,7 @@ class LoginViewModel(application:Application) : AndroidViewModel(application) {
                 }
 
             }
-
         }
-
         return t
     }
 

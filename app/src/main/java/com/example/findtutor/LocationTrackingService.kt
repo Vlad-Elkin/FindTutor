@@ -8,4 +8,5 @@ class LocationTrackingService:Service() {
     override fun onBind(p0: Intent?): IBinder? {
         TODO("Not yet implemented")
     }
+
 }
