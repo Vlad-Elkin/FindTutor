@@ -33,7 +33,14 @@ class LoginFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         _binding =FragmentLoginBinding.inflate(inflater,container,false )
         val root:View = binding.root
+        viewModel.repository.tutorList.observe(viewLifecycleOwner){
 
+        }
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.loginBtn.setOnClickListener {
             val login = binding.loginEmailPhone.text.toString()
             val password = binding.loginPassword.text.toString()
@@ -51,9 +58,8 @@ class LoginFragment : Fragment() {
             }
 
         }
-        return root
-    }
 
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

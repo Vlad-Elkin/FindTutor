@@ -17,7 +17,6 @@ import kotlin.math.log
 
 class LoginViewModel(application:Application) : AndroidViewModel(application) {
     val repository = TutorRepository(application.applicationContext)
-
     fun checkTutor(login:String, password:String): Tutor? {
         var t:Tutor? = null
         viewModelScope.launch {

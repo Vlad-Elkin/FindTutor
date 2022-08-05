@@ -17,7 +17,7 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
     var subjectFilter = MutableLiveData<Int>()
     var expFilter = MutableLiveData<Range<Double>>()
 
-    private val allTutors = repository.tutorList.asLiveData()
+    private val allTutors = repository.tutorList
 
     private val tutors: LiveData<List<Tutor>>
         get() {
