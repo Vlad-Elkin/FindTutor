@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "945319954039",
+    "project_id": "findtutor-3c4e8",
+    "storage_bucket": "findtutor-3c4e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945319954039:android:8913e5a321af7bba4ae872",
+        "android_client_info": {
+          "package_name": "com.example.findtutor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945319954039-cp05jpr52usnar4rnmtkjd51rn4pvnek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfpZqlGYAGBXQMfT-TngVkmWmd5LsipB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945319954039-cp05jpr52usnar4rnmtkjd51rn4pvnek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
