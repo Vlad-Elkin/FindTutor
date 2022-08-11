@@ -1,5 +1,7 @@
 package com.example.findtutor.ui.profile
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.findtutor.data.entities.Subject
 import com.example.findtutor.data.entities.Tutor
-import com.example.findtutor.data.entities.User
-import com.example.findtutor.data.local.ExampleData
 import com.example.findtutor.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -28,21 +27,41 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        var isTutorProfile: Boolean?
         var tutor:Any?
         if (arguments?.get("user")!= null){
             tutor = arguments?.get("user") as Tutor
+            isTutorProfile = false
         }
         else{
             tutor = arguments?.get("tutor") as Tutor
+            isTutorProfile = true
         }
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        viewModel.setProfile(tutor)
+        viewModel.setProfile(tutor,isTutorProfile)
         binding =FragmentProfileBinding.inflate(inflater,container,false )
         val root:View = binding.root
         binding.profile =viewModel
+        binding.btnAction.setOnClickListener {
+            if (isTutorProfile){
+                viewModel.phone.value.let { phone ->
+                    if (!phone.isNullOrBlank()){
+                        val dial = Uri.parse("tel:${phone}")
+                        val intent = Intent(Intent.ACTION_DIAL)
+                        intent.data = dial
+                        startActivity(intent)
+                    }
+                    else{
+                        Log.d("ProfileFragment","Нет номера телефона")
+                    }
+                }
+            }
+            else{
+                Log.d("action","Редактировать")
+            }
+        }
         binding.profileBack.setOnClickListener {
-
             findNavController().popBackStack()
         }
         return root

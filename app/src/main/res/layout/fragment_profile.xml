@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="Назад" />
 
         </LinearLayout>
 
@@ -125,11 +125,12 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/call_btn"
+                        android:id="@+id/btn_action"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Позвонить" />
+                        android:text="@{profile.actionBtnText}"
+                        tools:ignore="SpeakableTextPresentCheck" />
 
                 </LinearLayout>
             </LinearLayout>

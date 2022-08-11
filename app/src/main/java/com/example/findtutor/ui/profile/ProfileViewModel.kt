@@ -43,8 +43,11 @@ class ProfileViewModel(): ViewModel() {
     val aboutSelf:MutableLiveData<String> by lazy {
         MutableLiveData()
     }
+    val actionBtnText:MutableLiveData<String> by lazy {
+        MutableLiveData()
+    }
 
-    fun setProfile(profile:Tutor){
+    fun setProfile(profile: Tutor, isTutorProfile: Boolean){
         with(profile.photo){
             val bitmap = BitmapFactory.decodeByteArray(this,0,this.size)
             photo = BitmapDrawable(Resources.getSystem(),bitmap)
@@ -55,22 +58,23 @@ class ProfileViewModel(): ViewModel() {
         email.value = profile.email
         phone.value = profile.phone
         if (profile.isTutor){
-        subject.value = profile.subject_possessive
-        with(profile.experience.toInt()){
-            val tens = this%100
-            val ones = this%10
-            when(tens){
-                in 10..20 -> exp.value = "$this лет"
-                else -> {
-                    when(ones){
-                        1 -> exp.value = "$this год"
-                        in 2..4 -> exp.value = "$this года"
-                        else -> exp.value = "$this лет"
+            subject.value = profile.subject_possessive
+            with(profile.experience.toInt()){
+                val tens = this%100
+                val ones = this%10
+                when(tens){
+                    in 10..20 -> exp.value = "$this лет"
+                    else -> {
+                        when(ones){
+                            1 -> exp.value = "$this год"
+                            in 2..4 -> exp.value = "$this года"
+                            else -> exp.value = "$this лет"
+                        }
                     }
                 }
             }
+            aboutSelf.value = profile.about_me
         }
-        aboutSelf.value = profile.about_me
-        }
+        actionBtnText.value = if (isTutorProfile) "Позвонить" else "Редактировать"
     }
 }
