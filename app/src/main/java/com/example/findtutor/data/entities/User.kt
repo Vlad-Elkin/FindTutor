@@ -7,19 +7,19 @@ import androidx.room.PrimaryKey
 data class User(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
-    val isTutor:Boolean,
-    val photo: ByteArray,
-    val name:String,
-    val surname:String,
-    val email:String,
-    val phone:String,
-    val password:String,
-    val linkVK:String,
-    val id_fk_subject:Int?,
-    val experience:Double?,
-    val about_me:String?,
-    val Latitude:Double?,
-    val Longitude:Double?
+    var isTutor:Boolean,
+    var photo: ByteArray,
+    var name:String,
+    var surname:String,
+    var email:String,
+    var phone:String,
+    var password:String,
+    var linkVK:String,
+    var id_fk_subject:Int?,
+    var experience:Double?,
+    var about_me:String?,
+    var Latitude:Double?,
+    var Longitude:Double?
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

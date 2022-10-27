@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.findtutor.R
 import com.example.findtutor.data.entities.Tutor
 import com.example.findtutor.databinding.FragmentProfileBinding
 
@@ -27,8 +28,8 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        var isTutorProfile: Boolean?
-        var tutor:Any?
+        val isTutorProfile: Boolean?
+        val tutor:Any?
         if (arguments?.get("user")!= null){
             tutor = arguments?.get("user") as Tutor
             isTutorProfile = false
@@ -58,7 +59,7 @@ class ProfileFragment : Fragment() {
                 }
             }
             else{
-                Log.d("action","Редактировать")
+                findNavController().navigate(R.id.ProfileToEdit,arguments)
             }
         }
         binding.profileBack.setOnClickListener {

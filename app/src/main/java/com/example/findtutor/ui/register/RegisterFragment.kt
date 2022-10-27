@@ -1,7 +1,6 @@
 package com.example.findtutor.ui.register
 
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -16,11 +15,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.findtutor.LocationTrackingService
 import com.example.findtutor.R
 import com.example.findtutor.databinding.FragmentRegisterBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.gms.maps.model.LatLng
 
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -76,8 +73,7 @@ class RegisterFragment : Fragment() {
                 binding.regLinkVK.text.toString(),
                 binding.regSubjectSpinner.selectedItemPosition+1,
                 binding.regExp.text.toString().toDouble(),
-                binding.regAboutSelf.text.toString(),
-                getPosition())
+                binding.regAboutSelf.text.toString())
 
             findNavController().navigate(R.id.RegisterToStart)
         }
@@ -88,14 +84,14 @@ class RegisterFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            //Image Uri will not be null for RESULT_OK
-            val uri: Uri = data?.data!!
-            photo = readBytes(context!!, uri)
-        } else if (resultCode == ImagePicker.RESULT_ERROR) {
-            Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "Task Cancelled", Toast.LENGTH_SHORT).show()
+        when(resultCode){
+            Activity.RESULT_OK -> {
+                //Image Uri will not be null for RESULT_OK
+                val uri: Uri = data?.data!!
+                photo = readBytes(context!!, uri)
+            }
+            ImagePicker.RESULT_ERROR ->Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+            else -> Toast.makeText(context, "Task Cancelled", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -104,11 +100,6 @@ class RegisterFragment : Fragment() {
         ImagePicker.with(this)
             .crop()                 //Crop image(Optional), Check Customization for more option
             .start()
-    }
-
-    fun getPosition(): LatLng {
-        val location = LocationTrackingService()
-        return LatLng(0.0, 0.0)
     }
 
     @Throws(IOException::class)

@@ -17,26 +17,18 @@ import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = LoginFragment()
-    }
-    private var _binding: FragmentLoginBinding? = null
+    private lateinit var binding: FragmentLoginBinding
 
-    private val binding get() = _binding!!
-
-    private lateinit var viewModel: LoginViewModel
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        _binding =FragmentLoginBinding.inflate(inflater,container,false )
-        val root:View = binding.root
-        viewModel.repository.tutorList.observe(viewLifecycleOwner){
-
-        }
-        return root
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        binding =FragmentLoginBinding.inflate(inflater,container,false)
+        loginViewModel.repository.tutorList.observe(viewLifecycleOwner){}
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,13 +36,9 @@ class LoginFragment : Fragment() {
         binding.loginBtn.setOnClickListener {
             val login = binding.loginEmailPhone.text.toString()
             val password = binding.loginPassword.text.toString()
-            val tutor = viewModel.checkTutor(login,password)
+            val tutor = loginViewModel.checkTutor(login,password)
             if (tutor!= null){
-                var bundle = if (tutor.isTutor){
-                    bundleOf("tutor" to tutor)
-                } else{
-                    bundleOf("user" to tutor)
-                }
+                val bundle = bundleOf("user" to tutor)
                 findNavController().navigate(R.id.LoginToMaps, bundle)
             }
             else{
@@ -59,9 +47,5 @@ class LoginFragment : Fragment() {
 
         }
 
-    }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

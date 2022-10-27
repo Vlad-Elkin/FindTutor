@@ -15,8 +15,6 @@ interface TutorDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertNewUser(user: User)
 
     @Query("SELECT id,isTutor,photo,"+
             "name, surname," +

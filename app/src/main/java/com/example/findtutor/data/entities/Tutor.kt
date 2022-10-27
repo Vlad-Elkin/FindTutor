@@ -36,6 +36,10 @@ data class Tutor(
             .icon(BitmapDescriptorFactory.fromBitmap(image))
     }
 
+    fun toUser():User{
+        return User(id,isTutor,photo,name,surname,email,phone,password,
+            linkVK,id_subject,experience,about_me,Latitude,Longitude)
+    }
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

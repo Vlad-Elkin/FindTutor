@@ -6,7 +6,7 @@
     <data>
         <variable
             name="user"
-            type= "com.example.findtutor.data.entities.Tutor" />
+            type="com.example.findtutor.ui.edit.EditViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,7 +52,8 @@
                     android:id="@+id/switch1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Репетитор?" />
+                    android:text="Репетитор?"
+                    android:checked="@={user.tutor}"/>
 
                 <Space
                     android:layout_width="match_parent"
@@ -65,7 +66,7 @@
                     android:ems="10"
                     android:hint="@string/name_hint"
                     android:inputType="textPersonName"
-                    android:text="@{user.name}" />
+                    android:text="@={user.name}" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -78,7 +79,7 @@
                     android:ems="10"
                     android:hint="@string/surname_hint"
                     android:inputType="textPersonName"
-                    android:text="@{user.surname}" />
+                    android:text="@={user.surname}" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -91,7 +92,7 @@
                     android:ems="10"
                     android:hint="@string/email_hint"
                     android:inputType="textEmailAddress"
-                    android:text="@{user.email}" />
+                    android:text="@={user.email}" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -104,7 +105,7 @@
                     android:ems="10"
                     android:hint="@string/phone_hint"
                     android:inputType="phone"
-                    android:text="@{user.phone}" />
+                    android:text="@={user.phone}" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -117,7 +118,7 @@
                     android:ems="10"
                     android:hint="@string/password_hint"
                     android:inputType="textPassword"
-                    android:text="@{user.password}" />
+                    android:text="@={user.password}" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -130,7 +131,7 @@
                     android:ems="10"
                     android:hint="Ссылка на ВК"
                     android:inputType="textPersonName"
-                    android:text="@{user.linkVK}" />
+                    android:text="@={user.linkVK}" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -140,7 +141,9 @@
                     android:id="@+id/reg_subjectSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/subjects" />
+                    android:entries="@array/subjects"
+                    android:selectedItemPosition="@={user.id_subject}"
+                    />
 
                 <Space
                     android:layout_width="match_parent"
@@ -152,7 +155,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Стаж репетиторства"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    />
 
                 <Space
                     android:layout_width="match_parent"
@@ -167,7 +171,7 @@
                     android:hint="О себе"
                     android:inputType="textMultiLine"
                     android:minLines="5"
-                    android:text="@{user.about_me}" />
+                    android:text="@={user.about_me}" />
 
                 <Button
                     android:id="@+id/edit_btn"

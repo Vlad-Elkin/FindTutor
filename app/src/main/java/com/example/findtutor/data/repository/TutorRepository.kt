@@ -20,11 +20,7 @@ class TutorRepository(context: Context) {
             dao.insert(user)
         }
     }
-    fun insertNewUser(user: User){
-        CoroutineScope(Dispatchers.IO).launch {
-            dao.insertNewUser(user)
-        }
-    }
+
     fun insertSubject(subject: Subject){
         CoroutineScope(Dispatchers.IO).launch{
             dao.insert(subject)

@@ -1,12 +1,15 @@
 package com.example.findtutor.ui.maps
 
 import android.app.Application
+import android.location.Location
+import android.location.LocationListener
 import android.util.Log
 import android.util.Range
 import androidx.lifecycle.*
 import com.example.findtutor.data.entities.Tutor
 
 import com.example.findtutor.data.repository.TutorRepository
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -27,7 +30,8 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
                     else -> {
                         Transformations.switchMap(allTutors){ list->
                             val filteredTutors = MutableLiveData<List<Tutor>>()
-                            val filteredList = list.filter { tutor -> tutor.id_subject== subject_id }
+                            val filteredList = list.filter { tutor -> tutor.id_subject== subject_id
+                                    && tutor.isTutor }
                             filteredTutors.value = filteredList
                             filteredTutors
                         }
@@ -63,4 +67,5 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
         }
         return selected
     }
+
 }
