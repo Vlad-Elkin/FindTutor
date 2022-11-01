@@ -12,10 +12,11 @@ import com.example.findtutor.data.entities.User
 import com.example.findtutor.data.repository.TutorRepository
 import com.google.android.gms.maps.model.LatLng
 
-class RegisterViewModel(application: Application) : AndroidViewModel(application),LocationListener {
+class RegisterViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = TutorRepository(application.applicationContext)
-    private val latitude = MutableLiveData(0.0)
-    private val longitude = MutableLiveData(0.0)
+    val latitude = MutableLiveData(0.0)
+    val longitude = MutableLiveData(0.0)
+
     fun insertNewUser(isTutor:Boolean,
                       photo:ByteArray, name:String,surname: String,
                       email:String,phone:String,password:String,vk:String,
@@ -24,10 +25,5 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
             photo,name,surname,
             email.lowercase().replace(" ",""),phone, password,vk,
             subject,exp,about_me,latitude.value,longitude.value))
-    }
-
-    override fun onLocationChanged(loc: Location) {
-        latitude.postValue(loc.latitude)
-        longitude.postValue(loc.longitude)
     }
 }

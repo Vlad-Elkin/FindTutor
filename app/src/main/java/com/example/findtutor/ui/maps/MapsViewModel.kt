@@ -30,8 +30,9 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
                     else -> {
                         Transformations.switchMap(allTutors){ list->
                             val filteredTutors = MutableLiveData<List<Tutor>>()
-                            val filteredList = list.filter { tutor -> tutor.id_subject== subject_id
-                                    && tutor.isTutor }
+                            val filteredList = list.filter { tutor ->
+                                tutor.id_subject == subject_id
+                                        && tutor.isTutor }
                             filteredTutors.value = filteredList
                             filteredTutors
                         }
@@ -67,5 +68,4 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
         }
         return selected
     }
-
 }

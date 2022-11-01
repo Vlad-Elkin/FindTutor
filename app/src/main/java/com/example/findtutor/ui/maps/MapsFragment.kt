@@ -1,46 +1,39 @@
 package com.example.findtutor.ui.maps
 
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.util.toRange
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.findtutor.R
 import com.example.findtutor.databinding.FragmentMapsBinding
-import com.google.android.gms.maps.*
-
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
-import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 
-class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener,LocationListener {
+
+class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
     private lateinit var binding: FragmentMapsBinding
 
     private lateinit var viewModel: MapsViewModel
 
-    private var map: GoogleMap? = null
-    private var cameraPosition: CameraPosition? = null
-
-    private lateinit var locationManager: LocationManager
-    private var lastLocation: Location? = null
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val locationPermissionCode = 2
 
     override fun onCreateView(
@@ -48,11 +41,17 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener,Locati
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        if (ContextCompat.checkSelfPermission(requireContext(), ACCESS_FINE_LOCATION)
+            !=PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(ACCESS_FINE_LOCATION),
+                locationPermissionCode)
+        }
+
         viewModel = ViewModelProvider(this)[MapsViewModel::class.java]
         binding = FragmentMapsBinding.inflate(inflater,container,false)
         val root:View = binding.root
         filtering()
-        getLocation()
         return root
     }
 
@@ -88,24 +87,24 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener,Locati
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-
         binding.mapProfile.setOnClickListener {
             findNavController().navigate(R.id.MapsToProfilte,arguments)
         }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
         //location tracking
-        lastLocation?.let { map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude,it.latitude),15f)) }
+        mFusedLocationClient.lastLocation.addOnSuccessListener {
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it.let {
+                LatLng(it.latitude,it.longitude) },15f))
+        }
         // adding markers
         viewModel.markers.observe(this){ list ->
-            map!!.clear()
-            list?.forEach { map!!.addMarker(it) }
+            googleMap.clear()
+            list?.forEach { googleMap.addMarker(it) }
         }
-        map!!.setOnMarkerClickListener(this)
+        googleMap.setOnMarkerClickListener(this)
     }
-
 
     override fun onMarkerClick(marker: Marker): Boolean {
         viewModel.selectMarker(marker).observe(this){
@@ -113,20 +112,5 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener,Locati
             findNavController().navigate(R.id.profileFragment,bundle)
         }
         return false
-    }
-
-    private fun getLocation(){
-        locationManager = requireContext()
-            .getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if (ContextCompat.checkSelfPermission(requireContext(),ACCESS_FINE_LOCATION)!=
-            PERMISSION_GRANTED ){
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(ACCESS_FINE_LOCATION),
-                locationPermissionCode)
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,5f,this)
-    }
-
-    override fun onLocationChanged(location: Location) {
-        lastLocation = location
     }
 }

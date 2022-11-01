@@ -1,8 +1,11 @@
 package com.example.findtutor.data.entities
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "user_table")
 data class User(
     @PrimaryKey(autoGenerate = true)
@@ -20,7 +23,7 @@ data class User(
     var about_me:String?,
     var Latitude:Double?,
     var Longitude:Double?
-) {
+) : Parcelable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

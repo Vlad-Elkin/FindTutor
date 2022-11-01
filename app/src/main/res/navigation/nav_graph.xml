@@ -77,5 +77,11 @@
         android:id="@+id/editFragment"
         android:name="com.example.findtutor.ui.edit.EditFragment"
         android:label="fragment_edit"
-        tools:layout="@layout/fragment_edit" />
+        tools:layout="@layout/fragment_edit" >
+        <action
+            android:id="@+id/EditToProfile"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/editFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

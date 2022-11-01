@@ -1,15 +1,11 @@
 package com.example.findtutor.ui.edit
 
-import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
+import android.graphics.*
+import android.widget.ImageView
 import androidx.core.graphics.drawable.toBitmap
-import androidx.databinding.BindingAdapter
-import androidx.databinding.BindingMethod
-import androidx.lifecycle.MutableLiveData
+import androidx.databinding.*
 import androidx.lifecycle.ViewModel
+import com.example.findtutor.data.entities.Tutor
 import com.example.findtutor.data.entities.User
 import java.io.ByteArrayOutputStream
 
@@ -20,15 +16,9 @@ class EditViewModel : ViewModel() {
         get() = user.isTutor
         set(value) {user.isTutor = value}
 
-    var photo:Bitmap
-        get() = user.photo.let {
-            BitmapFactory.decodeByteArray(user.photo,0,user.photo.size)
-        }
-        set(value) {
-            val stream =  ByteArrayOutputStream()
-            value.compress(Bitmap.CompressFormat.JPEG,100,stream)
-            user.photo = stream.toByteArray()
-        }
+    var photo:ByteArray
+        get() = user.photo
+        set(value) { user.photo = value }
 
     var name:String
         get() = user.name
@@ -56,17 +46,22 @@ class EditViewModel : ViewModel() {
 
     var id_subject: Int?
         get() = user.id_fk_subject?.minus(1)
-        set(value) {
-            user.id_fk_subject = value?.plus(1)
-        }
+        set(value) { user.id_fk_subject = value?.plus(1) }
 
-    var experience: Double?
-        get() = user.experience
-        set(value) {user.experience = value}
+    var experience: String?
+        get() = user.experience.toString()
+        set(value) {user.experience = value?.toDouble()}
 
-    var about_me:String?
+    var about_me: String?
         get() = user.about_me
         set(value) {user.about_me = value}
 
+    companion object{
+        @JvmStatic
+        @BindingAdapter("app:srcCompat")
+        fun setImage(imageView: ImageView,image:ByteArray){
+            imageView.setImageBitmap(BitmapFactory.decodeByteArray(image,0,image.size))
+        }
+    }
 
 }

@@ -42,7 +42,8 @@
                     android:focusable="true"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/ImageViewCircle"
-                    app:srcCompat="@drawable/avatar" />
+                    app:srcCompat="@{user.photo}"
+                    />
 
                 <Space
                     android:layout_width="match_parent"
@@ -156,6 +157,7 @@
                     android:ems="10"
                     android:hint="Стаж репетиторства"
                     android:inputType="number"
+                    android:text="@={user.experience}"
                     />
 
                 <Space
