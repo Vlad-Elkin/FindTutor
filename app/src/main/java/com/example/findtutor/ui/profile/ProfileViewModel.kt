@@ -9,72 +9,58 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.findtutor.data.entities.*
+import com.example.findtutor.data.repository.TutorRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ProfileViewModel(): ViewModel() {
+    var isTutorProfile = false
+    val photo = MutableLiveData<Drawable>()
+    val surname = MutableLiveData<String>()
+    val name = MutableLiveData<String>()
+    val email = MutableLiveData<String>()
+    val phone = MutableLiveData<String>()
+    val vk = MutableLiveData<String>()
+    val subject = MutableLiveData<String>()
+    val exp= MutableLiveData<String>()
+    val aboutSelf = MutableLiveData<String>()
+    val actionBtnText = MutableLiveData<String>()
 
-
-    var photo: Drawable?=null
-
-    val surname:MutableLiveData<String> by lazy {
-        MutableLiveData()
-    }
-
-    val name:MutableLiveData<String> by lazy {
-        MutableLiveData()
-    }
-
-    val email:MutableLiveData<String> by lazy {
-        MutableLiveData()
-    }
-
-    val phone:MutableLiveData<String> by lazy {
-        MutableLiveData()
-    }
-
-    val subject:MutableLiveData<String> by lazy {
-        MutableLiveData()
-    }
-
-    val exp:MutableLiveData<String> by lazy {
-        MutableLiveData()
-    }
-    val aboutSelf:MutableLiveData<String> by lazy {
-        MutableLiveData()
-    }
-    val actionBtnText:MutableLiveData<String> by lazy {
-        MutableLiveData()
-    }
-
-    fun setProfile(profile: Tutor, isTutorProfile: Boolean){
+    fun setProfile(profile:User,subjectList: List<Subject>,_isTutorProfile: Boolean = false){
+        isTutorProfile = _isTutorProfile
         with(profile.photo){
             val bitmap = BitmapFactory.decodeByteArray(this,0,this.size)
-            photo = BitmapDrawable(Resources.getSystem(),bitmap)
+            photo.postValue(BitmapDrawable(Resources.getSystem(),bitmap))
         }
-        surname.value = profile.surname
-        surname.value = profile.surname
-        name.value = profile.name
-        email.value = profile.email
-        phone.value = profile.phone
-        if (profile.isTutor){
-            subject.value = profile.subject_possessive
+        surname.postValue(profile.surname)
+        name.postValue(profile.name)
+        email.postValue(profile.email)
+        phone.postValue(profile.phone)
+        vk.postValue(profile.linkVK)
+        if (_isTutorProfile){
+            subject.postValue(subjectList.filter { it.id == profile.id_fk_subject }[0].possessive)
             with(profile.experience.toInt()){
                 val tens = this%100
                 val ones = this%10
                 when(tens){
-                    in 10..20 -> exp.value = "$this лет"
+                    in 10..20 -> exp.postValue("$this лет")
                     else -> {
                         when(ones){
-                            1 -> exp.value = "$this год"
-                            in 2..4 -> exp.value = "$this года"
-                            else -> exp.value = "$this лет"
+                            1 -> exp.postValue("$this год")
+                            in 2..4 -> exp.postValue("$this года")
+                            else -> exp.postValue("$this лет")
                         }
                     }
                 }
             }
-            aboutSelf.value = profile.about_me
+            aboutSelf.postValue(profile.about_me)
+            actionBtnText.postValue("Позвонить")
         }
-        actionBtnText.value = if (isTutorProfile) "Позвонить" else "Редактировать"
+        else{
+            actionBtnText.postValue("Редактировать")
+        }
     }
 }

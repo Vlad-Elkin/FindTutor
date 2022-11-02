@@ -26,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import java.lang.NullPointerException
 
 
 class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
@@ -94,10 +95,13 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
 
     override fun onMapReady(googleMap: GoogleMap) {
         //location tracking
-        mFusedLocationClient.lastLocation.addOnSuccessListener {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it.let {
-                LatLng(it.latitude,it.longitude) },15f))
-        }
+        try {
+            mFusedLocationClient.lastLocation.addOnSuccessListener {
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it.let {
+                    LatLng(it.latitude,it.longitude) },15f))
+            }
+        }catch (e:NullPointerException){}
+
         // adding markers
         viewModel.markers.observe(this){ list ->
             googleMap.clear()

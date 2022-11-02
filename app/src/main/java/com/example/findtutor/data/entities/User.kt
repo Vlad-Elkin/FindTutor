@@ -1,8 +1,13 @@
 package com.example.findtutor.data.entities
 
+import android.graphics.BitmapFactory
 import android.os.Parcelable
+import androidx.core.graphics.scale
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -18,12 +23,20 @@ data class User(
     var phone:String,
     var password:String,
     var linkVK:String,
-    var id_fk_subject:Int?,
-    var experience:Double?,
-    var about_me:String?,
-    var Latitude:Double?,
-    var Longitude:Double?
+    var id_fk_subject:Int,
+    var experience:Double,
+    var about_me:String,
+    var Latitude:Double,
+    var Longitude:Double
 ) : Parcelable {
+    fun toMarkerOptions(): MarkerOptions {
+        val image = BitmapFactory.decodeByteArray(photo,0,photo.size)
+            .scale(128+64,128+64,true)
+        return MarkerOptions()
+            .title("Tutor#$id")
+            .position(LatLng(Latitude, Longitude))
+            .icon(BitmapDescriptorFactory.fromBitmap(image))
+    }
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -56,11 +69,11 @@ data class User(
         result = 31 * result + phone.hashCode()
         result = 31 * result + password.hashCode()
         result = 31 * result + linkVK.hashCode()
-        result = 31 * result + (id_fk_subject ?: 0)
-        result = (31 * result + (experience ?: 0.0)).toInt()
-        result = 31 * result + (about_me?.hashCode() ?: 0)
-        result = 31 * result + (Latitude?.hashCode() ?: 0)
-        result = 31 * result + (Longitude?.hashCode() ?: 0)
+        result = 31 * result + id_fk_subject
+        result = (31 * result + (experience)).toInt()
+        result = 31 * result + about_me.hashCode()
+        result = 31 * result + Latitude.hashCode()
+        result = 31 * result + Longitude.hashCode()
         return result
     }
 }

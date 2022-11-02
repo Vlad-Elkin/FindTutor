@@ -9,14 +9,11 @@ import androidx.fragment.app.Fragment
 import android.view.*
 import androidx.navigation.fragment.findNavController
 import com.example.findtutor.R
-import com.example.findtutor.data.entities.Tutor
+import com.example.findtutor.data.entities.User
+import com.example.findtutor.data.repository.TutorRepository
 import com.example.findtutor.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
 
     private lateinit var binding: FragmentProfileBinding
 
@@ -26,29 +23,35 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val isTutorProfile: Boolean?
-        val tutor:Any?
-        if (arguments?.get("user")!= null){
-            tutor = arguments?.get("user") as Tutor
-            isTutorProfile = false
-        }
-        else{
-            tutor = arguments?.get("tutor") as Tutor
-            isTutorProfile = true
-        }
-
-        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        viewModel.setProfile(tutor,isTutorProfile)
         binding =FragmentProfileBinding.inflate(inflater,container,false )
         val root:View = binding.root
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        TutorRepository(requireContext()).subjectList.observe(viewLifecycleOwner){
+            if (arguments?.get("user")!= null)
+                viewModel.setProfile(arguments?.get("user") as User,it)
+            else
+                viewModel.setProfile(arguments?.get("tutor") as User,it,true)
+        }
         binding.profile =viewModel
+        binding.profileBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        binding.vkBtn.setOnClickListener {
+            viewModel.vk.value.let { link ->
+                if (!link.isNullOrBlank()){
+                    val uri = Uri.parse("http://vk.com/$link")
+                    startActivity(Intent(Intent.ACTION_VIEW, uri))
+                }else{
+                    Log.d("ProfileFragment","Не получается перейти")
+                }
+            }
+        }
         binding.btnAction.setOnClickListener {
-            if (isTutorProfile){
+            if (viewModel.isTutorProfile){
                 viewModel.phone.value.let { phone ->
                     if (!phone.isNullOrBlank()){
-                        val dial = Uri.parse("tel:${phone}")
                         val intent = Intent(Intent.ACTION_DIAL)
-                        intent.data = dial
+                        intent.data = Uri.parse("tel:$phone")
                         startActivity(intent)
                     }
                     else{
@@ -60,9 +63,7 @@ class ProfileFragment : Fragment() {
                 findNavController().navigate(R.id.ProfileToEdit,arguments)
             }
         }
-        binding.profileBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
+
         return root
     }
 }

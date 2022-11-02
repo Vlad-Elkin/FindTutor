@@ -21,9 +21,14 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
                       photo:ByteArray, name:String,surname: String,
                       email:String,phone:String,password:String,vk:String,
                       subject:Int,exp:Double,about_me:String){
-        repository.insertUser(User(0,isTutor,
-            photo,name,surname,
-            email.lowercase().replace(" ",""),phone, password,vk,
-            subject,exp,about_me,latitude.value,longitude.value))
+        latitude.value?.let {
+            longitude.value?.let { it1 ->
+                User(0,isTutor,
+                    photo,name,surname,
+                    email.lowercase().replace(" ",""),phone, password,vk,
+                    subject,exp,about_me, it, it1
+                )
+            }
+        }?.let { repository.insertUser(it) }
     }
 }

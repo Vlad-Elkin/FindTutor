@@ -27,7 +27,7 @@ class LoginFragment : Fragment() {
     ): View? {
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding =FragmentLoginBinding.inflate(inflater,container,false)
-        loginViewModel.repository.tutorList.observe(viewLifecycleOwner){}
+        loginViewModel.repository.userList.observe(viewLifecycleOwner){}
         return binding.root
     }
 

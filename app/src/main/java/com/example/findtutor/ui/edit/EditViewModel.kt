@@ -2,12 +2,9 @@ package com.example.findtutor.ui.edit
 
 import android.graphics.*
 import android.widget.ImageView
-import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.*
 import androidx.lifecycle.ViewModel
-import com.example.findtutor.data.entities.Tutor
 import com.example.findtutor.data.entities.User
-import java.io.ByteArrayOutputStream
 
 class EditViewModel : ViewModel() {
     lateinit var user: User
@@ -45,16 +42,22 @@ class EditViewModel : ViewModel() {
         set(value) {user.linkVK = value}
 
     var id_subject: Int?
-        get() = user.id_fk_subject?.minus(1)
-        set(value) { user.id_fk_subject = value?.plus(1) }
+        get() = user.id_fk_subject.minus(1)
+        set(value) {
+            if (value != null) { user.id_fk_subject = value.plus(1) }
+        }
 
     var experience: String?
         get() = user.experience.toString()
-        set(value) {user.experience = value?.toDouble()}
+        set(value) {
+            if (value != null) { user.experience = value.toDouble() }
+        }
 
     var about_me: String?
         get() = user.about_me
-        set(value) {user.about_me = value}
+        set(value) {
+            if (value != null) { user.about_me = value }
+        }
 
     companion object{
         @JvmStatic

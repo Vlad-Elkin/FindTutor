@@ -11,7 +11,7 @@ import com.example.findtutor.data.entities.*
         User::class,
         Subject::class
     ],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 abstract class AppDatabase:RoomDatabase() {

@@ -1,15 +1,11 @@
 package com.example.findtutor.ui.maps
 
 import android.app.Application
-import android.location.Location
-import android.location.LocationListener
-import android.util.Log
 import android.util.Range
 import androidx.lifecycle.*
-import com.example.findtutor.data.entities.Tutor
+import com.example.findtutor.data.entities.User
 
 import com.example.findtutor.data.repository.TutorRepository
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -20,18 +16,18 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
     var subjectFilter = MutableLiveData<Int>()
     var expFilter = MutableLiveData<Range<Double>>()
 
-    private val allTutors = repository.tutorList
+    private val allUsers = repository.userList
 
-    private val tutors: LiveData<List<Tutor>>
+    private val tutors: LiveData<List<User>>
         get() {
             val filteredListBySubject = Transformations.switchMap(subjectFilter){ subject_id ->
                 val tutorsByFilters = when (subject_id) {
-                    null -> allTutors
+                    null -> allUsers
                     else -> {
-                        Transformations.switchMap(allTutors){ list->
-                            val filteredTutors = MutableLiveData<List<Tutor>>()
+                        Transformations.switchMap(allUsers){ list->
+                            val filteredTutors = MutableLiveData<List<User>>()
                             val filteredList = list.filter { tutor ->
-                                tutor.id_subject == subject_id
+                                tutor.id_fk_subject == subject_id
                                         && tutor.isTutor }
                             filteredTutors.value = filteredList
                             filteredTutors
@@ -44,7 +40,7 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
                 val tutorsByFilters = when (exp) {
                     null -> filteredListBySubject
                     else -> Transformations.switchMap(filteredListBySubject) { list ->
-                        val filteredTutors = MutableLiveData<List<Tutor>>()
+                        val filteredTutors = MutableLiveData<List<User>>()
                         val filteredList = list.filter { tutor -> exp.contains(tutor.experience) }
                         filteredTutors.value = filteredList
                         filteredTutors
@@ -60,10 +56,10 @@ class MapsViewModel(application: Application):AndroidViewModel(application) {
             return tutors.map { tutorList -> tutorList.map { it.toMarkerOptions() } }
         }
 
-    private var selected:MutableLiveData<Tutor> = MutableLiveData()
+    private var selected:MutableLiveData<User> = MutableLiveData()
 
-    fun selectMarker(marker: Marker): MutableLiveData<Tutor> {
-        allTutors.value?.forEach {
+    fun selectMarker(marker: Marker): MutableLiveData<User> {
+        allUsers.value?.forEach {
             if(it.toMarkerOptions().title==marker.title) selected.postValue(it)
         }
         return selected

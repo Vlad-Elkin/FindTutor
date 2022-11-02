@@ -15,15 +15,19 @@ interface TutorDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)
 
+    @Query("SELECT id_subject,subject_name,subject_possessive "+
+            "FROM subject_table")
+    fun getSubjectList():LiveData<List<Subject>>
+
     @Query("SELECT id,isTutor,photo,"+
             "name, surname," +
             "email, phone, password, linkVK," +
-            "id_subject,subject_name, subject_possessive," +
+            "id_fk_subject," +
             "experience, about_me," +
             "Latitude,Longitude " +
-            "FROM user_table as User," +
-            "subject_table as Subject " +
-            "WHERE User.id_fk_subject = Subject.id_subject")
-    fun getTutorList():LiveData<List<Tutor>>
+            "FROM user_table as User")
+    fun getUserList():LiveData<List<User>>
+
+
 
 }

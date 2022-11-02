@@ -47,7 +47,7 @@
         tools:layout="@layout/fragment_profile" >
         <argument
             android:name="tutor"
-            app:argType="com.example.findtutor.data.entities.Tutor" />
+            app:argType="com.example.findtutor.data.entities.User" />
         <action
             android:id="@+id/ProfileToEdit"
             app:destination="@id/editFragment" />
@@ -81,7 +81,7 @@
         <action
             android:id="@+id/EditToProfile"
             app:destination="@id/profileFragment"
-            app:popUpTo="@id/editFragment"
+            app:popUpTo="@id/mapsFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

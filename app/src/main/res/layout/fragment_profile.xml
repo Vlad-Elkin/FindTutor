@@ -7,6 +7,7 @@
         <variable
             name="profile"
             type="com.example.findtutor.ui.profile.ProfileViewModel" />
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,6 +81,12 @@
                     android:text="@{profile.phone}" />
 
                 <TextView
+                    android:id="@+id/profile_vk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{profile.vk}" />
+
+                <TextView
                     android:id="@+id/profile_subject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -114,13 +121,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="VK" />
-
-                        <Button
-                            android:id="@+id/button2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Button" />
 
                     </LinearLayout>
 

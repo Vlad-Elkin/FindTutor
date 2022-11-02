@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.findtutor.R
-import com.example.findtutor.data.entities.Tutor
+import com.example.findtutor.data.entities.*
 import com.example.findtutor.data.repository.TutorRepository
 import com.example.findtutor.databinding.FragmentEditBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -34,8 +34,8 @@ class EditFragment : Fragment() {
         binding =FragmentEditBinding.inflate(inflater,container,false )
         val root:View = binding.root
         viewModel = ViewModelProvider(this).get(EditViewModel::class.java)
-        val user = arguments?.get("user") as Tutor
-        viewModel.user = user.toUser()
+        val user = arguments?.get("user") as User
+        viewModel.user = user
         binding.user = viewModel
         binding.regImage.setOnClickListener {
             getPhoto()
@@ -53,8 +53,7 @@ class EditFragment : Fragment() {
         binding.editBtn.setOnClickListener {
             try {
                 TutorRepository(requireContext()).insertUser(viewModel.user)
-                findNavController().navigate(R.id.EditToProfile,
-                    bundleOf("user" to viewModel.user))
+                findNavController().navigate(R.id.EditToProfile, bundleOf("user" to viewModel.user))
             }catch (e: NumberFormatException){
                 Toast.makeText(requireContext(),"Не все поля заполнены",Toast.LENGTH_SHORT).show()
             }
