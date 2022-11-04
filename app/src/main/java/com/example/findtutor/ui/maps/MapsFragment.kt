@@ -96,12 +96,11 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
     override fun onMapReady(googleMap: GoogleMap) {
         //location tracking
         try {
-            mFusedLocationClient.lastLocation.addOnSuccessListener {
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it.let {
+            mFusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location.let {
                     LatLng(it.latitude,it.longitude) },15f))
             }
         }catch (e:NullPointerException){}
-
         // adding markers
         viewModel.markers.observe(this){ list ->
             googleMap.clear()

@@ -1,19 +1,11 @@
 package com.example.findtutor.ui.profile
 
 import android.content.res.Resources
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.graphics.drawable.*
+import androidx.lifecycle.*
+import com.example.findtutor.R
 import com.example.findtutor.data.entities.*
-import com.example.findtutor.data.repository.TutorRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class ProfileViewModel(): ViewModel() {
@@ -29,7 +21,7 @@ class ProfileViewModel(): ViewModel() {
     val aboutSelf = MutableLiveData<String>()
     val actionBtnText = MutableLiveData<String>()
 
-    fun setProfile(profile:User,subjectList: List<Subject>,_isTutorProfile: Boolean = false){
+    fun setProfile(profile:User,subjectList: List<Subject>,_isTutorProfile: Boolean){
         isTutorProfile = _isTutorProfile
         with(profile.photo){
             val bitmap = BitmapFactory.decodeByteArray(this,0,this.size)
