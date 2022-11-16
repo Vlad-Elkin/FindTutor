@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.google.android.material.snackbar.Snackbar
 import java.lang.NullPointerException
 
 
@@ -105,6 +107,9 @@ class MapsFragment : Fragment(),OnMapReadyCallback, OnMarkerClickListener {
         viewModel.markers.observe(this){ list ->
             googleMap.clear()
             list?.forEach { googleMap.addMarker(it) }
+            if (list.isEmpty()) Toast.makeText(requireContext(),
+                "Ни одного репетитора не было найдено...",
+                Toast.LENGTH_SHORT).show()
         }
         googleMap.setOnMarkerClickListener(this)
     }

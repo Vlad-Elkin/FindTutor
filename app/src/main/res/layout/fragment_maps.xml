@@ -26,7 +26,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="horizontal"
             android:weightSum="5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,27 +34,32 @@
             <Button
                 android:id="@+id/map_back"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:text="Выйти" />
 
             <LinearLayout
-                android:layout_width="345dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:weightSum="2">
 
                 <Spinner
                     android:id="@+id/map_spinner_subject"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#D6D7D7"
                     android:entries="@array/subjects"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <Spinner
                     android:id="@+id/map_spinner_exp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#D6D7D7"
                     android:entries="@array/experience"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
@@ -63,7 +67,7 @@
             <Button
                 android:id="@+id/map_profile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:text="Профиль" />
 
